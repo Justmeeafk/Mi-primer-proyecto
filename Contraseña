@@ -1,0 +1,11 @@
+import random
+
+password = "+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+usuario = int(input("escribe la longitud de la contraseña"))
+
+new_pass = ""
+
+for i in range(usuario):
+    new_pass += random.choice(password)
+
+print(new_pass)
