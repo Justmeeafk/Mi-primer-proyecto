@@ -1,19 +1,21 @@
 
+
 import discord
 from discord.ext import commands
+import random
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix='$', intents=intents)
+bot = commands.Bot(command_prefix='$', intents=intents, help_command=None)
 
 @bot.event
 async def on_ready():
-    print(f'We have logged in as {bot.user}')
+    print(f'we have logged in as {bot.user}')
 
 @bot.command()
 async def hello(ctx):
-    await ctx.send(f'Hola, soy un bot {bot.user}!')
+    await ctx.send(f'hola, soy un bot {bot.user}!')
 
 @bot.command()
 async def heh(ctx, count_heh = 5):
@@ -21,8 +23,48 @@ async def heh(ctx, count_heh = 5):
 
 @bot.command()
 async def add(ctx, left: int, right: int):
-    """Adds two numbers together."""
     await ctx.send(left + right)
 
+@bot.command()
+async def help(ctx):
+    await ctx.send('lista de comandos disponibles:')
+    await ctx.send('$hello - saluda al bot')
+    await ctx.send('$heh - repite he varias veces')
+    await ctx.send('$add <numero> <numero> - suma dos numeros')
+    await ctx.send('$joke - te cuenta un chiste')
+    await ctx.send('$compliment - te da un elogio')
+    await ctx.send('$roll - lanza un dado')
+    await ctx.send('$dance - el bot baila')
 
-bot.run("Llave")
+@bot.command()
+async def joke(ctx):
+    chistes = [
+        '¿qué hace una abeja en el gimnasio? ¡zum-ba!',
+        '¿por qué los peces no hablan? porque están en el agua.',
+        '¿cuál es el café más peligroso del mundo? el ¡im-perecedero!',
+        '¿qué le dice un techo a otro? ¡yo arriba y tú abajo!',
+        '¿por qué las gallinas cruzan la carretera? ¡para demostrar que no son pollos!'
+    ]
+    await ctx.send(random.choice(chistes))
+
+@bot.command()
+async def compliment(ctx):
+    elogios = [
+        '¡eres increíblemente genial!',
+        '¡tu código es puro arte!',
+        '¡tienes una sonrisa que ilumina el servidor!',
+        '¡eres más inteligente que el promedio de los bots!',
+        '¡hoy es tu día, brilla con luz propia!'
+    ]
+    await ctx.send(random.choice(elogios))
+
+@bot.command()
+async def roll(ctx):
+    numero = random.randint(1, 6)
+    await ctx.send(f'has lanzado el dado y ha salido: {numero}')
+
+@bot.command()
+async def dance(ctx):
+    await ctx.send(' el bot está bailando! 💃 ')
+
+bot.run("token")
